@@ -18,7 +18,7 @@ var botAmount = 10;
 var lastTarget = GM_getValue("target");
 var porting = true;
 var words = await fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/s0urce%20words/words.json").then(r=>{if(r.ok){return r.json()}});
-if(words==undefined){console.log("Can't get words\nExiting...");return;}
+if(words==undefined){console.log("Can't get words\nExiting...");setTimeout(()=>window.open("http://s0urce.io","_self"))}
 
 
 function bot(){
@@ -95,7 +95,7 @@ function getCmd(e){
     if(cmd=="stop"){GM_deleteValue("target");console.log("Bots Stoped");return;}
     if(cmd.startsWith("botAmount")){
         let amount = parseInt(cmd.split("botAmount ")[1]);
-        if(!isNaN(amount)){botAmount=amount;console.log("Changed botAmount to "+botAmount);}else{console.log("Usage: bot!botAmount <Number>");}
+        if(!isNaN(amount)){botAmount=(amount>25)?25:amount;console.log("Changed botAmount to "+botAmount);}else{console.log("Usage: bot!botAmount <Number>");}
         return;
     }
     if(cmd.startsWith("message")){
@@ -131,6 +131,7 @@ function selectTarget(id){
 
 function startBots(){
     for(let i=0;i<botAmount;i++){window.open("http://s0urce.io","_blank");}
+    window.focus();
     console.log("Created "+botAmount+" Bots");
 }
 
