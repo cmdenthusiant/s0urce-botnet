@@ -14,11 +14,23 @@ Tampermonkey Only!!!
 
 ## Commands
 
-1.Attack Target\
+1.Attack Target
 ```
 bot!<id>
 ```
-2.Stop Attack\
+2.Stop Attack
 ```
 bot!stop
+```
+3.Set Amount of Bots
+```
+bot!botAmount <Number>
+```
+4.Set Message for your target
+```
+bot!message <message>
+```
+5.Set the time(ms) between each word sent
+```
+bot!ms <ms>
 ```
