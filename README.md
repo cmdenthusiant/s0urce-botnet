@@ -22,7 +22,7 @@ bot!<id>
 ```
 bot!stop
 ```
-3.Set Amount of Bots (default=10,Max=20)
+3.Set Amount of Bots (default=10,Max=25)
 ```
 bot!botAmount <Number>
 ```
