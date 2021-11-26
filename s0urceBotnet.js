@@ -11,7 +11,7 @@
 // @grant        GM_deleteValue
 // ==/UserScript==
 
-var botName = "Botnet"; //Bot's name
+var botName = "Botnet";
 var Message = "";
 var reHackms = 2000;
 var botAmount = 10;
@@ -22,12 +22,12 @@ if(words==undefined){console.log("Can't get words\nExiting...");return;}
 
 
 function bot(){
-    $("#login-input").val(botName); //Input bot name
-    $("#login-play").click(); //Login
-    const checkPlLoop = setInterval(()=>{//check if player list was loaded
+    $("#login-input").val(botName);
+    $("#login-play").click();
+    const checkPlLoop = setInterval(()=>{
         const pl = document.getElementById("player-list");
         if(pl.children.length!=1){
-            clearInterval(checkPlLoop); //Stop Loop
+            clearInterval(checkPlLoop);
             console.log("yes");
             selectTarget(lastTarget);
             port();
@@ -114,10 +114,10 @@ function getCmd(e){
 }
 
 function waitPlLoad(){
-    const checkPlLoop = setInterval(()=>{//check if player list was loaded
+    const checkPlLoop = setInterval(()=>{
         const pl = document.getElementById("player-list");
         if(pl.children.length!=1){
-            clearInterval(checkPlLoop); //Stop Loop
+            clearInterval(checkPlLoop);
             return;
         }
     },100);
