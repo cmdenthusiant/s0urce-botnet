@@ -131,7 +131,6 @@ function selectTarget(id){
 
 function startBots(){
     for(let i=0;i<botAmount;i++){window.open("http://s0urce.io","_blank");}
-    window.focus();
     console.log("Created "+botAmount+" Bots");
 }
 
