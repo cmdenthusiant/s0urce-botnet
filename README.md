@@ -22,7 +22,7 @@ bot!<id>
 ```
 bot!stop
 ```
-3.Set Amount of Bots
+3.Set Amount of Bots (default=10)
 ```
 bot!botAmount <Number>
 ```
@@ -30,7 +30,7 @@ bot!botAmount <Number>
 ```
 bot!message <message>
 ```
-5.Set the time(ms) between each word sent
+5.Set the time(ms) between each word sent (default=500)
 ```
 bot!ms <ms>
 ```
