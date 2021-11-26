@@ -5,6 +5,6 @@ Tampermonkey Only!!!
 
 ## How to use it
 
-1.Start your game
-2.Get you target's id
+1.Start your game\
+2.Get you target's id\
 ![alt text](https://github.com/cmdenthusiant/s0urce-botnet/blob/main/README's/Screenshot%20(44).png)
