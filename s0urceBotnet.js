@@ -17,7 +17,7 @@ var reHackms = 2000;
 var botAmount = 10;
 var lastTarget = GM_getValue("target");
 var porting = true;
-var words = await fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/words.json").then(r=>{if(r.ok){return r.json()}});
+var words = await fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/s0urce%20words/words.json").then(r=>{if(r.ok){return r.json()}});
 if(words==undefined){console.log("Can't get words\nExiting...");return;}
 
 
