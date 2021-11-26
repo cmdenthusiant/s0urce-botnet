@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  A botnet for s0urce!
 // @author       cmdenthusiant
-// @match        http://s0urce.io/
+// @match        *://s0urce.io/
 // @icon         https://www.google.com/s2/favicons?domain=s0urce.io
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -60,7 +60,7 @@ function hack(){
         typeBox.value = words[difficulty][imgNum];
         let lastLogNum = $("#cdm-text-container").children().length;
         $("#tool-type-word").submit();
-        setTimeout(()=>{if(!($("#cdm-text-container").children().length>lastLogNum)){if(lags>=5){console.log("Bot is offine\nReloading...");window.open("http://s0urce.io","_self");clearInterval(loop);}else{port();lags+=1;console.log("Lagging...")}}else{lags=0;}},1000)
+        setTimeout(()=>{if(!($("#cdm-text-container").children().length>lastLogNum)){if(lags>=5){console.log("Bot is offine\nReloading...");window.open("http://s0urce.io","_self");clearInterval(loop);}else{port();lags+=1;console.log("Lagging...")}}else{lags=0;}},1000);
     },(GM_getValue("ms")!=undefined)?GM_getValue("ms"):500);
 }
 
