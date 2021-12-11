@@ -28,7 +28,6 @@ function bot(){
         const pl = document.getElementById("player-list");
         if(pl.children.length!=1){
             clearInterval(checkPlLoop);
-            console.log("yes");
             selectTarget(lastTarget);
             port();
             hack();
@@ -42,7 +41,7 @@ function hack(){
     var lagReload = false;
     const loop = setInterval(()=>{
         if(porting){return;}
-        if(GM_getValue("target")==undefined){console.log("Closing Bot");window.close();return;}
+        if(GM_getValue("target")==undefined){log("! Closing Bot");window.close();return;}
         if(GM_getValue("target")!=lastTarget){lastTarget=GM_getValue("target");selectTarget(lastTarget);port();}
         let imgWord = $(".tool-type-img")[0];
         let learnedWords = GM_getValue("learnedWords");
@@ -58,7 +57,7 @@ function hack(){
         let difficulty = imgWord.src.split("http://s0urce.io/client/img/word/")[1].split("/")[0];
         let imgNum = imgWord.src.split("http://s0urce.io/client/img/word/"+difficulty)[1].replace("/","");
         if(learnedWords[difficulty][imgNum]){
-            console.log(difficulty,imgNum,learnedWords[difficulty][imgNum]);
+            log("> Found word: "+difficulty+" "+imgNum+" "+learnedWords[difficulty][imgNum]);
             typeBox.value = learnedWords[difficulty][imgNum];
         }else{
             findWord(imgWord, difficulty, imgNum);
@@ -66,7 +65,7 @@ function hack(){
         }
         let lastLogNum = $("#cdm-text-container").children().length;
         $("#tool-type-word").submit();
-        setTimeout(()=>{if(!($("#cdm-text-container").children().length>lastLogNum)){if(lags>=5){console.log("Bot is offine\nReloading...");window.open("http://s0urce.io","_self");clearInterval(loop);}else{port();lags+=1;console.log("Lagging...")}}else{lags=0;}},1000);
+        setTimeout(()=>{if(!($("#cdm-text-container").children().length>lastLogNum)){if(lags>=5){log("! Bot is offine,Reloading...","error");window.open("http://s0urce.io","_self");clearInterval(loop);}else{port();lags+=1;log("! Lagging...","error")}}else{lags=0;}},1000);
     },(GM_getValue("ms")!=undefined)?GM_getValue("ms"):500);
 }
 
@@ -82,7 +81,7 @@ function port(){
 }
 
 function main(){
-    window.onbeforeunload = (e)=>{GM_deleteValue("target");GM_deleteValue("msg");GM_deleteValue("ms");GM_deleteValue("learnedWords");console.log("yes");e.returnValue='';};
+    window.onbeforeunload = (e)=>{GM_deleteValue("target");GM_deleteValue("msg");GM_deleteValue("ms");GM_deleteValue("learnedWords");e.returnValue='';};
     const checkPlLoop = setInterval(()=>{//check if player list was loaded
         const pl = document.getElementById("player-list");
         if(pl.children.length!=1){
@@ -98,23 +97,23 @@ function getCmd(e){
     if(!cmdBox.val().startsWith("bot!")){return;}
     let cmd = cmdBox.val().replace("bot!","");
     if(cmd==""){return;}
-    if(cmd=="stop"){GM_deleteValue("target");console.log("Bots Stoped");return;}
+    if(cmd=="stop"){GM_deleteValue("target");log("> Bots Stoped");return;}
     if(cmd.startsWith("botAmount")){
         let amount = parseInt(cmd.split("botAmount ")[1]);
-        if(!isNaN(amount)){botAmount=(amount>25)?25:amount;console.log("Changed botAmount to "+botAmount);}else{console.log("Usage: bot!botAmount <Number>");}
+        if(!isNaN(amount)){botAmount=(amount>25)?25:amount;log("> Changed botAmount to "+botAmount);}else{log("! Usage: bot!botAmount <Number>","error");}
         return;
     }
     if(cmd.startsWith("message")){
         let msg = cmd.replace("message ","");
-        if(msg!=""){GM_setValue("msg",msg);console.log("Changed Message to '"+msg+"'");}else{console.log("Usage: bot!message <message>");}
+        if(msg!=""){GM_setValue("msg",msg);log("> Changed Message to '"+msg+"'");}else{log("! Usage: bot!message <message>","error");}
         return;
     }
     if(cmd.startsWith("ms")){
         let ms = parseInt(cmd.replace("ms ",""));
-        if(!isNaN(ms)){GM_setValue("ms",ms);console.log("Changed ms to '"+ms+"'");}else{console.log("Usage: bot!ms <ms>");}
+        if(!isNaN(ms)){GM_setValue("ms",ms);log("> Changed ms to '"+ms+"'");}else{log("! Usage: bot!ms <ms>","error");}
         return;
     }
-    console.log("Target's Id: "+cmd);
+    log("> Target's Id: "+cmd);
     if(GM_getValue("target")===undefined){setTimeout(()=>{startBots()},200);}
     GM_setValue("target",cmd);
 }
@@ -136,7 +135,7 @@ function findWord(img,difficulty,imgNum){
         let word = words[difficulty][code];
         let learnedWords = GM_getValue("learnedWords");
         learnedWords[difficulty][imgNum] = word;
-        if(word){GM_setValue("learnedWords",learnedWords);porting=false;}else{console.log("Can't find words,retrying...");findWord(img,difficulty,imgNum);}
+        if(word){GM_setValue("learnedWords",learnedWords);porting=false;}else{log("Can't find words,retrying...","error");findWord(img,difficulty,imgNum);}
     },500);
 }
 
@@ -148,10 +147,20 @@ function selectTarget(id){
 
 function startBots(){
     for(let i=0;i<botAmount;i++){window.open("http://s0urce.io","_blank");}
-    console.log("Created "+botAmount+" Bots");
+    log("> Created "+botAmount+" Bots");
 }
 
 function randomInt(min,max){return Math.floor(Math.random()*(max-min+1)+min)}
+
+function log(msg,type=""){
+    let logClass = "window-log-message"+((type=="error")?" window-log-message-danger":"");
+    let htmlLog = document.createElement("div");
+    htmlLog.className = logClass;
+    htmlLog.innerText = msg;
+    let logBox = $(".window-log-content")[0];
+    logBox.append(htmlLog);
+    logBox.scrollTo({top:logBox.scrollHeight,behavior:"smooth"});
+}
 
 function getBase64Image(img) {
     var canvas = document.createElement("canvas");
