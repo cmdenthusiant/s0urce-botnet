@@ -19,7 +19,7 @@ var lastTarget = GM_getValue("target");
 var porting = true;
 var words = await fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/s0urce%20words/words.json").then(r=>{if(r.ok){return r.json()}});
 if(words==undefined){console.log("Can't get words\nExiting...");setTimeout(()=>window.open("http://s0urce.io","_self"))}
-
+if(GM_getValue("learnedWords")===undefined){GM_setValue("learnedWords",{"e":{},"m":{},"h":{}});}
 
 function bot(){
     $("#login-input").val(botName);
@@ -45,6 +45,7 @@ function hack(){
         if(GM_getValue("target")==undefined){console.log("Closing Bot");window.close();return;}
         if(GM_getValue("target")!=lastTarget){lastTarget=GM_getValue("target");selectTarget(lastTarget);port();}
         let imgWord = $(".tool-type-img")[0];
+        let learnedWords = GM_getValue("learnedWords");
         if(imgWord.src=="http://s0urce.io/client/img/words/template.png"){
             let msgBox = $("#topwindow-success");
             if(msgBox.is(":visible")){
@@ -56,8 +57,13 @@ function hack(){
         }
         let difficulty = imgWord.src.split("http://s0urce.io/client/img/word/")[1].split("/")[0];
         let imgNum = imgWord.src.split("http://s0urce.io/client/img/word/"+difficulty)[1].replace("/","");
-        console.log(difficulty,imgNum,words[difficulty][imgNum]);
-        typeBox.value = words[difficulty][imgNum];
+        if(learnedWords[difficulty][imgNum]){
+            console.log(difficulty,imgNum,learnedWords[difficulty][imgNum]);
+            typeBox.value = learnedWords[difficulty][imgNum];
+        }else{
+            findWord(imgWord, difficulty, imgNum);
+            return;
+        }
         let lastLogNum = $("#cdm-text-container").children().length;
         $("#tool-type-word").submit();
         setTimeout(()=>{if(!($("#cdm-text-container").children().length>lastLogNum)){if(lags>=5){console.log("Bot is offine\nReloading...");window.open("http://s0urce.io","_self");clearInterval(loop);}else{port();lags+=1;console.log("Lagging...")}}else{lags=0;}},1000);
@@ -76,7 +82,7 @@ function port(){
 }
 
 function main(){
-    window.onbeforeunload = (e)=>{GM_deleteValue("target");GM_deleteValue("msg");GM_deleteValue("ms");console.log("yes");e.returnValue='';};
+    window.onbeforeunload = (e)=>{GM_deleteValue("target");GM_deleteValue("msg");GM_deleteValue("ms");GM_deleteValue("learnedWords");console.log("yes");e.returnValue='';};
     const checkPlLoop = setInterval(()=>{//check if player list was loaded
         const pl = document.getElementById("player-list");
         if(pl.children.length!=1){
@@ -123,6 +129,17 @@ function waitPlLoad(){
     },100);
 }
 
+function findWord(img,difficulty,imgNum){
+    porting = true;
+    setTimeout(()=>{
+        let code = getBase64Image(img);
+        let word = words[difficulty][code];
+        let learnedWords = GM_getValue("learnedWords");
+        learnedWords[difficulty][imgNum] = word;
+        if(word){GM_setValue("learnedWords",learnedWords);porting=false;}else{console.log("Can't find words,retrying...");findWord(img,difficulty,imgNum);}
+    },500);
+}
+
 function selectTarget(id){
     let cmdBox = $("#targetid-input");
     cmdBox.val(id);
@@ -135,5 +152,16 @@ function startBots(){
 }
 
 function randomInt(min,max){return Math.floor(Math.random()*(max-min+1)+min)}
+
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    canvas.toDataURL("image/png");
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
 
 if(lastTarget!=undefined){bot();}else{main();}
