@@ -1,5 +1,5 @@
 # s0urce-botnet
-[![Download Script](https://greasyfork.org/zh-TW/scripts/436892-s0urce-botnet)](https://github.com/Tampermonkey/tampermonkey/blob/master/images/icon_grey.png)\
+![Download Script](https://github.com/Tampermonkey/tampermonkey/blob/master/images/icon_grey.png)\
 a simple botnet
 
 Tampermonkey Only!!!
