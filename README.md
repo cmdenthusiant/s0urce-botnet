@@ -1,5 +1,5 @@
-# s0urce-botnet (outdated)
-a simple botnet (outdated)
+# s0urce-botnet
+a simple botnet
 
 Tampermonkey Only!!!
 
