@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 var botName = "Botnet";
-var Message = "github. com/cmdenthusiant /s0urce-botnet";
+var Message = "github.com/cmdenthusiant/s0urce-botnet";
 var reHackms = 2000;
 var botAmount = 10;
 var lastTarget = GM_getValue("target");
