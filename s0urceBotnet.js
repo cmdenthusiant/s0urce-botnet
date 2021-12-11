@@ -50,8 +50,8 @@ function hack(){
             if(msgBox.is(":visible")){
                 $("#targetmessage-input").val((GM_getValue("msg")!=undefined)?GM_getValue("msg"):Message);
                 $("#targetmessage-input").submit();
-                port();
             }
+            port();
             return;
         }
         let difficulty = imgWord.src.split("http://s0urce.io/client/img/word/")[1].split("/")[0];
