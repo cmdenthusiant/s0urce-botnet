@@ -12,13 +12,13 @@
 // ==/UserScript==
 
 var botName = "Botnet";
-var Message = "";
+var Message = "github. com/cmdenthusiant /s0urce-botnet";
 var reHackms = 2000;
 var botAmount = 10;
 var lastTarget = GM_getValue("target");
 var porting = true;
-var words = await fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/s0urce%20words/words.json").then(r=>{if(r.ok){return r.json()}});
-if(words==undefined){console.log("Can't get words\nExiting...");setTimeout(()=>window.open("http://s0urce.io","_self"))}
+var words;
+fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/s0urce%20words/words.json").then(r=>{if(r.ok){return r.json()}else{{console.log("Can't get words\nExiting...");setTimeout(()=>{window.open("http://s0urce.io","_self")},1000)}}}).then(json=>{words = json;});
 if(GM_getValue("learnedWords")===undefined){GM_setValue("learnedWords",{"e":{},"m":{},"h":{}});}
 
 function bot(){
