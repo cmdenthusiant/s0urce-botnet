@@ -1,5 +1,5 @@
 # s0urce-botnet
-![Link to Google](https://greasyfork.org/zh-TW/scripts/436892-s0urce-botnet)
+![Download Script](https://greasyfork.org/zh-TW/scripts/436892-s0urce-botnet)\
 a simple botnet
 
 Tampermonkey Only!!!
