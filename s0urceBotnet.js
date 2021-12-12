@@ -16,6 +16,7 @@ var Message = "github.com/ cmdenthusiant/s0urce-botnet";
 var reHackms = 2000;
 var botAmount = 10;
 var lastTarget = GM_getValue("target");
+var lastMessage = GM_getValue("msg");
 var porting = true;
 var words;
 fetch("https://raw.githubusercontent.com/cmdenthusiant/s0urce-botnet/main/s0urce%20words/words.json").then(r=>{if(r.ok){return r.json()}else{{console.log("Can't get words\nExiting...");setTimeout(()=>{window.open("http://s0urce.io","_self")},1000)}}}).then(json=>{words = json;});
@@ -31,6 +32,7 @@ function bot(){
             selectTarget(lastTarget);
             port();
             hack();
+            description();
         }
     },100);
 }
@@ -43,6 +45,7 @@ function hack(){
         if(porting){return;}
         if(GM_getValue("target")==undefined){log("! Closing Bot");window.close();return;}
         if(GM_getValue("target")!=lastTarget){lastTarget=GM_getValue("target");selectTarget(lastTarget);port();}
+        if(GM_getValue("msg")!=lastMessage){lastMessage=GM_getValue("msg");description();}
         let imgWord = $(".tool-type-img")[0];
         let learnedWords = GM_getValue("learnedWords");
         if(imgWord.src=="http://s0urce.io/client/img/words/template.png"){
@@ -78,6 +81,12 @@ function port(){
         ports[portNum].click();
         setTimeout(()=>{if($("#cdm-text-container").children().length>lastLogNum){port();}else{porting=false;}},1000);
     },reHackms);
+}
+
+function description(){
+    $("#window-my-playerquote-wrapper").click();
+    $("#playerquote-type-word").val((GM_getValue("msg")!=undefined)?GM_getValue("msg"):Message);
+    $("#playerquote-type-word").submit();
 }
 
 function main(){
